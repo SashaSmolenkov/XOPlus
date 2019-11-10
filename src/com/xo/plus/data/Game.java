@@ -14,11 +14,11 @@ public class Game {
     }
 
     public boolean isMultiplayer() {
-        return gameType.equals("multiplayer");
+        return gameType.equals(Constant.MP_XO);
     }
 
     public boolean isSingleplayer() {
-        return gameType.equals("singleplayer");
+        return gameType.equals(Constant.SP_XO);
     }
 
     public String getPlayer1Name() {

@@ -5,7 +5,6 @@ import com.xo.plus.data.Field;
 import com.xo.plus.data.Game;
 import com.xo.plus.data.Winner;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleView implements InterfaceControl {
@@ -18,18 +17,17 @@ public class ConsoleView implements InterfaceControl {
     }
 
     @Override
-    public void startInterface() {
+    public void startInterface(String gm) {
         System.out.println("Добро пожаловать в крестики-нолики плюс!");
-        String gm = gameModeDialog();
         String name1;
         String name2;
-        if (gm.equals("multiplayer")) {
+        if (gm.equals(Constant.MP_XO)) {
             name1 = nameDialog("X");
             name2 = nameDialog("O");
             game.load(name1,name2,gm);
         } else {
             name1 = nameDialog("X");
-            game.load(name1, Constant.COMPUTER_NAME,gm);
+            game.load(name1, Constant.COMPUTER_NAME, gm);
         }
     }
 
@@ -52,7 +50,7 @@ public class ConsoleView implements InterfaceControl {
         return game;
     }
 
-    private String gameModeDialog() {
+    public String gameModeDialog() {
         System.out.print("Перед началом игры нужно выбрать игровой режим :\n" +
                 "Одиночная игра против компьютера ( введите 1 ) или\n" +
                 "Игра один на один ( введите 0 )    ВВОД - ");
@@ -64,9 +62,9 @@ public class ConsoleView implements InterfaceControl {
         }
 
         if (num == 0) {
-            return "multiplayer";
+            return Constant.MP_XO;
         } else if (num == 1) {
-            return "singleplayer";
+            return Constant.SP_XO;
         }
 
         return null;

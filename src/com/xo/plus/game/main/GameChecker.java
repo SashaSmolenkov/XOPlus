@@ -1,22 +1,33 @@
 package com.xo.plus.game.main;
 
 import com.xo.plus.data.Constant;
+import com.xo.plus.data.Field;
+import com.xo.plus.game.exceptions.IncorrectIndexException;
+import com.xo.plus.game.exceptions.IncorrectLetterException;
 
 public class GameChecker {
-    public static void checkIndex(int y, int x) {
+    public static void checkIndex(int y, int x, String[][] field)
+    throws IncorrectIndexException
+    {
         int size = Constant.FIELD_SIZE;
+
+        if (!field[y][x].equals("N")) {
+            throw new IncorrectIndexException();
+        }
 
         if (y >= size || x >= size
                 || y < 0 || x < 0) {
-            System.err.println("XO Error 01 : incorrect index typed.");
+            throw new IncorrectIndexException();
         }
     }
 
-    public static void checkLetter(String letter) {
+    public static void checkLetter(String letter)
+    throws IncorrectLetterException
+    {
         if (letter.equals("X") || letter.equals("O") || letter.equals(Constant.DEFAULT_CHARACTER) ) {
             return;
         } else {
-            System.err.println("XO Error 02 : incorrect letter typed (not X, O or N).");
+            throw new IncorrectLetterException();
         }
     }
 }

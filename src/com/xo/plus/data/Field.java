@@ -1,5 +1,7 @@
 package com.xo.plus.data;
 
+import com.xo.plus.game.exceptions.IncorrectIndexException;
+import com.xo.plus.game.exceptions.IncorrectLetterException;
 import com.xo.plus.game.main.GameChecker;
 
 public class Field {
@@ -12,13 +14,25 @@ public class Field {
     }
 
     public String get(int y, int x) {
-        GameChecker.checkIndex(y,x);
+        try {
+            GameChecker.checkIndex(y,x,field);
+        } catch (IncorrectIndexException ex) {
+            System.out.println(ex.getError());
+        }
         return field[y][x];
     }
 
-    public void set(int y, int x, String newVal) {
-        GameChecker.checkIndex(y,x);
-        GameChecker.checkLetter(newVal);
+    public void set(int y, int x, String newVal)
+    throws IncorrectLetterException,IncorrectIndexException
+    {
+       // try{
+            GameChecker.checkIndex(y,x,field);
+            GameChecker.checkLetter(newVal);
+     //   } catch (IncorrectIndexException ex) {
+    //        System.out.println(ex.getError());
+   //     } catch (IncorrectLetterException ex) {
+    //        System.out.println(ex.getError());
+    //    }
         field[y][x] = newVal;
     }
 

@@ -3,6 +3,8 @@ package com.xo.plus.game.multiplayer;
 import com.xo.plus.data.Constant;
 import com.xo.plus.data.Field;
 import com.xo.plus.data.Game;
+import com.xo.plus.game.exceptions.IncorrectIndexException;
+import com.xo.plus.game.exceptions.IncorrectLetterException;
 import com.xo.plus.game.main.GameWinController;
 import com.xo.plus.game.main.StepController;
 import com.xo.plus.viewer.ConsoleView;
@@ -30,18 +32,29 @@ public class MultiplayerGameController {
 
     public void start() {
         if (consoleView != null) {
-            consoleView.startInterface();
+            consoleView.startInterface(Constant.MP_XO);
             game = consoleView.getGame();
         }
         if (swingView != null) {
-            swingView.startInterface();
+            swingView.startInterface(Constant.MP_XO);
             game = swingView.getGame();
         }
-        while (!winController.getWin(field).isWon() || !field.isFull()) update();
+        while (!winController.getWin(field).isWon() ||
+               !field.isFull()) {
+            try {
+                update();
+            } catch (IncorrectIndexException ex) {
+                System.exit(0);
+            } catch (IncorrectLetterException ex) {
+                System.exit(0);
+            }
+        }
         end();
     }
 
-    public void update() {
+    public void update()
+    throws IncorrectIndexException,IncorrectLetterException
+    {
         String stepLetter = stepController.getNext(field);
         String stepName = Constant.DEFAULT_PLAYER_NAME;
         int[] stepPoint = new int[2];
@@ -69,7 +82,7 @@ public class MultiplayerGameController {
             consoleView.endInterface(winController.getWin(field),field);
         }
         if (swingView != null) {
-            //swingView.endInterface(winController.getWin(field));
+            swingView.endInterface(winController.getWin(field),field);
         }
     }
 }

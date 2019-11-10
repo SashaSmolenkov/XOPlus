@@ -12,7 +12,7 @@ public class SwingView implements InterfaceControl {
     }
 
     @Override
-    public void startInterface() {
+    public void startInterface(String gm) {
 
     }
 
