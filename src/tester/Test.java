@@ -10,14 +10,14 @@ public class Test {
         Field field = new Field();
         GameWinController gameWinController = new GameWinController();
 
-        field.set(0,0,"X");
+        /***field.set(0,0,"X");
         field.set(0,1,"X");
         field.set(0,2,"O");
         field.set(1,1,"O");
-        field.set(2,0,"X");
+        field.set(2,0,"X");***/
 
-        Winner winner = gameWinController.getWin(field);
-        System.out.println(winner.isWon());
-        System.out.println(winner.getWinner());
+        //Winner winner = gameWinController.getWin(field);
+        //System.out.println(winner.isWon());
+        //System.out.println(winner.getWinner());
     }
 }

@@ -5,7 +5,9 @@ import com.xo.plus.data.Field;
 import com.xo.plus.data.Winner;
 
 public class GameWinController {
-    public Winner getWin(Field field) {
+    public Winner getWin(Field field)
+    throws Exception
+    {
         Winner winner;
 
         if ((winner = checkDiagonal1(field)).isWon()) {
@@ -27,7 +29,9 @@ public class GameWinController {
         return new Winner(false,null);
     }
 
-    private Winner checkDiagonal1(Field field) {
+    private Winner checkDiagonal1(Field field)
+    throws Exception
+    {
         String startLetter = field.get(0,0);
         Winner winner = new Winner(false,null);
 
@@ -53,7 +57,9 @@ public class GameWinController {
         return winner;
     }
 
-    private Winner checkDiagonal2(Field field) {
+    private Winner checkDiagonal2(Field field)
+    throws Exception
+    {
         String startLetter = field.get(0,Constant.FIELD_SIZE - 1);
         Winner winner = new Winner(false,null);
 
@@ -79,7 +85,9 @@ public class GameWinController {
         return winner;
     }
 
-    private Winner checkHorizontal(Field field) {
+    private Winner checkHorizontal(Field field)
+    throws Exception
+    {
         String startLetter = "";
         boolean findWin = false;
         Winner winner = new Winner(false,null);
@@ -112,7 +120,9 @@ public class GameWinController {
         return winner;
     }
 
-    private Winner checkVertical(Field field) {
+    private Winner checkVertical(Field field)
+    throws Exception
+    {
         String startLetter = "";
         boolean findWin = false;
         Winner winner = new Winner(false,null);

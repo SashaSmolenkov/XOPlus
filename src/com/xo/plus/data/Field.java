@@ -1,7 +1,5 @@
 package com.xo.plus.data;
 
-import com.xo.plus.game.main.GameChecker;
-
 public class Field {
     private String[][] field;
 
@@ -11,15 +9,33 @@ public class Field {
         fillNulls();
     }
 
-    public String get(int y, int x) {
-        GameChecker.checkIndex(y,x);
+    public static void checkIndex(int y, int x)
+    throws Exception
+    {
+        int size = Constant.FIELD_SIZE;
+
+        if (y >= size || x >= size
+                || y < 0 || x < 0) {
+            throw new Exception("XO Error 01 : incorrect index typed.");
+        }
+    }
+
+    public String get(int y, int x)
+    throws Exception
+    {
+        checkIndex(y,x);
         return field[y][x];
     }
 
-    public void set(int y, int x, String newVal) {
-        GameChecker.checkIndex(y,x);
-        GameChecker.checkLetter(newVal);
-        field[y][x] = newVal;
+    public void set(int y, int x, String newVal)
+    throws Exception
+    {
+        checkIndex(y,x);
+        if (newVal.equals("X") || newVal.equals("O") || newVal.equals(Constant.DEFAULT_CHARACTER) ) {
+            field[y][x] = newVal;
+        } else {
+            throw new Exception("XO Error 02 : incorrect letter typed (not X, O or N).");
+        }
     }
 
     public boolean isFull() {
@@ -33,16 +49,18 @@ public class Field {
         return true;
     }
 
-    public void printOnScreen() {
+    public String toString() {
+        String out = "";
         for (int y = 0; y < field.length; y++) {
-            System.out.print("|");
+            out += "|";
             for (int x = 0; x < field.length; x++) {
                 String value = field[y][x];
                 if (value.equals(Constant.DEFAULT_CHARACTER)) value = " ";
-                System.out.print(value + "|");
+                out += value + "|";
             }
-            System.out.println();
+            out += "\n";
         }
+        return out;
     }
 
     public int[] getState() {

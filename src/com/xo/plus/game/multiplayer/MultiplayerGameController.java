@@ -37,11 +37,25 @@ public class MultiplayerGameController {
             swingView.startInterface();
             game = swingView.getGame();
         }
-        while (!winController.getWin(field).isWon() || !field.isFull()) update();
+        while (true) {
+            try {
+                if ((!winController.getWin(field).isWon()) &&
+                        (!field.isFull())) {
+                    update();
+                } else {
+                    break;
+                }
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+
+        }
         end();
     }
 
-    public void update() {
+    public void update()
+    throws Exception
+    {
         String stepLetter = stepController.getNext(field);
         String stepName = Constant.DEFAULT_PLAYER_NAME;
         int[] stepPoint = new int[2];
@@ -61,15 +75,19 @@ public class MultiplayerGameController {
             System.out.println("Нельзя поставить ход на одно и то же место дважды !");
         }
 
-        field.printOnScreen();
+        System.out.println(field);
     }
 
     public void end() {
-        if (consoleView != null) {
-            consoleView.endInterface(winController.getWin(field),field);
-        }
-        if (swingView != null) {
-            //swingView.endInterface(winController.getWin(field));
+        try {
+            if (consoleView != null) {
+                consoleView.endInterface(winController.getWin(field), field);
+            }
+            if (swingView != null) {
+                swingView.endInterface(winController.getWin(field), field);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

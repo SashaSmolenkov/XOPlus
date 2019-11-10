@@ -33,10 +33,6 @@ public class ConsoleView implements InterfaceControl {
         }
     }
 
-    @Override
-    public int[] update(String playerName) {
-        return stepDialog(playerName);
-    }
 
     @Override
     public void endInterface(Winner winner, Field field) {
@@ -88,4 +84,9 @@ public class ConsoleView implements InterfaceControl {
         }
         return new int[] {y - 1,x - 1};
     }
+    @Override
+    public int[] update(String playerName) {
+        return stepDialog(playerName);
+    }
+
 }
