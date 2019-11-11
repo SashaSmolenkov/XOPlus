@@ -74,18 +74,32 @@ public class ConsoleView implements InterfaceControl {
         return name;
     }
 
-    private int[] stepDialog(String playerName) {
+    private int[] stepDialog(String playerName)
+    throws Exception
+    {
         System.out.println("Ход игрока " + playerName + " - введите координаты (X Y) : ");
-        int x = scanner.nextInt();
-        int y = scanner.nextInt();
+        int x = -1;
+        int y = -1;
+
+        try {
+            x = scanner.nextInt();
+            y = scanner.nextInt();
+        } catch (InputMismatchException ex) {
+            scanner.reset();
+            scanner = new Scanner(System.in);
+            throw new Exception("Неправильный ввод - введите два числа через перевод строки (Пример : 2 1)");
+        }
+
         if (x < 1 || x > Constant.FIELD_SIZE || y < 1 || y > Constant.FIELD_SIZE) {
-            System.out.println("Неправильный ввод - введите два числа через перевод строки (Пример : 2 1)");
-            stepDialog(playerName);
+            throw new Exception("Неправильный ввод - введите два числа через перевод строки (Пример : 2 1)");
+            //stepDialog(playerName);
         }
         return new int[] {y - 1,x - 1};
     }
     @Override
-    public int[] update(String playerName) {
+    public int[] update(String playerName)
+    throws Exception
+    {
         return stepDialog(playerName);
     }
 
