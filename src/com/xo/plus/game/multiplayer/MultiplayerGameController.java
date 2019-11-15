@@ -1,59 +1,17 @@
 package com.xo.plus.game.multiplayer;
 
 import com.xo.plus.data.Constant;
-import com.xo.plus.data.Field;
-import com.xo.plus.data.Game;
-import com.xo.plus.game.main.GameWinController;
-import com.xo.plus.game.main.StepController;
+import com.xo.plus.game.main.GameController;
 import com.xo.plus.viewer.ConsoleView;
 import com.xo.plus.viewer.SwingView;
 
-public class MultiplayerGameController {
-    private GameWinController winController;
-    private StepController stepController;
-    private ConsoleView consoleView;
-    private SwingView swingView;
-    private Field field;
-    private Game game;
-
-    public MultiplayerGameController() {
-        winController = new GameWinController();
-        stepController = new StepController();
-        field = new Field();
-
-        if (Constant.INTERFACE.equals("console")) {
-            consoleView = new ConsoleView();
-        } else if (Constant.INTERFACE.equals("swing")) {
-            swingView = new SwingView();
-        }
+public class MultiplayerGameController extends GameController {
+    public MultiplayerGameController(ConsoleView consoleView, SwingView swingView) {
+        super(consoleView,swingView);
     }
 
-    public void start() {
-        if (consoleView != null) {
-            consoleView.startInterface();
-            game = consoleView.getGame();
-        }
-        if (swingView != null) {
-            swingView.startInterface();
-            game = swingView.getGame();
-        }
-        while (true) {
-            try {
-                if ((!winController.getWin(field).isWon()) &&
-                        (!field.isFull())) {
-                    update();
-                } else {
-                    break;
-                }
-            } catch (Exception ex) {
-                System.err.println(ex.getMessage());
-            }
-
-        }
-        end();
-    }
-
-    public void update()
+    @Override
+    protected void update()
     throws Exception
     {
         String stepLetter = stepController.getNext(field);
@@ -76,18 +34,5 @@ public class MultiplayerGameController {
         }
 
         System.out.println(field);
-    }
-
-    public void end() {
-        try {
-            if (consoleView != null) {
-                consoleView.endInterface(winController.getWin(field), field);
-            }
-            if (swingView != null) {
-                swingView.endInterface(winController.getWin(field), field);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }

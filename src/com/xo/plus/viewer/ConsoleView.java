@@ -18,7 +18,7 @@ public class ConsoleView implements InterfaceControl {
     }
 
     @Override
-    public void startInterface() {
+    public String startInterface() {
         System.out.println("Добро пожаловать в крестики-нолики плюс!");
         String gm = gameModeDialog();
         String name1;
@@ -31,6 +31,8 @@ public class ConsoleView implements InterfaceControl {
             name1 = nameDialog("X");
             game.load(name1, Constant.COMPUTER_NAME,gm);
         }
+
+        return gm;
     }
 
 
@@ -48,7 +50,7 @@ public class ConsoleView implements InterfaceControl {
         return game;
     }
 
-    private String gameModeDialog() {
+    public String gameModeDialog() {
         System.out.print("Перед началом игры нужно выбрать игровой режим :\n" +
                 "Одиночная игра против компьютера ( введите 1 ) или\n" +
                 "Игра один на один ( введите 0 )    ВВОД - ");
@@ -70,8 +72,7 @@ public class ConsoleView implements InterfaceControl {
 
     private String nameDialog(String playerLetter) {
         System.out.print("Введите имя игрока " + playerLetter + " - ");
-        String name = scanner.next();
-        return name;
+        return scanner.next();
     }
 
     private int[] stepDialog(String playerName)

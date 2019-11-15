@@ -1,5 +1,7 @@
 package com.xo.plus.data;
 
+import com.xo.plus.viewer.ConsoleView;
+
 public class Field {
     private String[][] field;
 
@@ -31,7 +33,8 @@ public class Field {
     throws Exception
     {
         checkIndex(y,x);
-        if (newVal.equals("X") || newVal.equals("O") || newVal.equals(Constant.DEFAULT_CHARACTER) ) {
+        if ((newVal.equals("X") || newVal.equals("O") || newVal.equals(Constant.DEFAULT_CHARACTER))
+                && (field[y][x].equals(Constant.DEFAULT_CHARACTER))) {
             field[y][x] = newVal;
         } else {
             throw new Exception("XO Error 02 : incorrect letter typed (not X, O or N).");
@@ -78,6 +81,20 @@ public class Field {
         }
 
         return new int[] {countX, countO};
+    }
+
+    public Field cloneField()
+    throws Exception
+    {
+        Field result = new Field();
+
+        for (int y = 0; y < Constant.FIELD_SIZE; y++) {
+            for (int x = 0; x < Constant.FIELD_SIZE; x++) {
+                result.set(y,x,get(y,x));
+            }
+        }
+
+        return result;
     }
 
     private void fillNulls() {
